@@ -5,10 +5,21 @@
 }
 
 body {
-    font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-weight: 700;
     line-height: 1.6;
     color: #333;
     overflow-x: hidden;
+}
+
+@media (min-width: 769px) {
+    body {
+        padding-bottom: 0;
+    }
+    
+    .footer {
+        padding-bottom: 150px; /* 하단 배너 높이 + 기존 패딩 */
+    }
 }
 
 .container {
@@ -23,7 +34,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    background: #333;
+    background: transparent;
     backdrop-filter: blur(10px);
     z-index: 1000;
     transition: all 0.3s ease;
@@ -57,9 +68,13 @@ body {
     transition: all 0.3s ease;
 }
 
-.menu-toggle span {
+.menu-toggle > span:first-child {
     font-size: 1.5em;
     line-height: 1;
+}
+
+.menu-text-pc {
+    display: none;
 }
 
 .menu-toggle:hover {
@@ -74,7 +89,7 @@ body {
     width: 80%;
     max-width: 350px;
     height: 100vh;
-    background: #333;
+    background: #000;
     box-shadow: -2px 0 15px rgba(0,0,0,0.3);
     z-index: 1001;
     transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,7 +106,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #555;
-    background: #2a2a2a;
+    background: #000;
 }
 
 .menu-header img {
@@ -135,15 +150,339 @@ body {
     color: #ffc107;
 }
 
+/* 메뉴 오버레이 */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* 히어로 섹션 */
 .hero {
-    margin-top: 80px;
+    margin-top: -80px;
     width: 100%;
+    position: relative;
 }
 
 .hero img {
     width: 100%;
     height: auto;
+    display: block;
+}
+
+/* 모바일 히어로 문의하기 버튼 */
+.hero-mobile-inquiry-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .header {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: transparent !important;
+    }
+
+    .header-container {
+        background: transparent;
+    }
+
+    .hero {
+        margin-top: -20px;
+    }
+
+    .hero img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .hero-mobile-inquiry-btn {
+        display: block;
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 40px;
+        background: linear-gradient(135deg, #000 0%, #1a1a1a 50%, #000 100%);
+        background-size: 200% 200%;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        z-index: 10;
+        animation: gradientMove 3s ease infinite, floatButton 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientMove {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    @keyframes floatButton {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        50% {
+            transform: translateX(-50%) translateY(-8px);
+        }
+    }
+
+    .hero-mobile-inquiry-btn:active {
+        transform: translateX(-50%) translateY(2px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        animation: none;
+    }
+}
+
+/* 히어로 문의 카드 (데스크탑만) */
+.hero-inquiry-card {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero-inquiry-card {
+        display: block;
+        position: absolute;
+        top: 250px;
+        right: 300px;
+        width: 280px;
+        background: #000;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    /* 화면이 너무 작을 때는 숨김 처리 */
+    @media (max-width: 1200px) {
+        .hero-inquiry-card {
+            right: 30px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .hero-inquiry-card {
+            display: none;
+        }
+    }
+
+    .hero-card-logo {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .hero-card-logo img {
+        height: 35px;
+        width: auto;
+    }
+
+    .hero-inquiry-card .form-group {
+        margin-bottom: 12px;
+    }
+
+    .hero-inquiry-card .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+        color: #fff;
+        font-size: 0.8em;
+    }
+
+    .hero-inquiry-card .form-group input,
+    .hero-inquiry-card .form-group select,
+    .hero-inquiry-card .form-group textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-family: inherit;
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
+        transition: border-color 0.3s ease;
+    }
+
+    .hero-inquiry-card .form-group input:focus,
+    .hero-inquiry-card .form-group select:focus,
+    .hero-inquiry-card .form-group textarea:focus {
+        outline: none;
+        border-color: #ffc107;
+        background: #fff;
+    }
+
+    .hero-inquiry-card .form-group textarea {
+        resize: vertical;
+        min-height: 60px;
+        font-size: 0.85em;
+    }
+
+    .hero-inquiry-card .form-group input,
+    .hero-inquiry-card .form-group select {
+        font-size: 0.85em;
+    }
+
+    .inquiry-submit-btn {
+        width: 100%;
+        padding: 10px;
+        background: #ffc107;
+        color: #1d2f4d;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 5px;
+    }
+
+    .inquiry-submit-btn:hover {
+        background: #ffd54f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+    }
+}
+
+/* 하단 문의 띠지 배너 (데스크탑만) */
+.bottom-inquiry-banner {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .bottom-inquiry-banner {
+        display: block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #000;
+        padding: 20px 0;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        z-index: 998;
+    }
+
+    .banner-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .banner-logo {
+        flex-shrink: 0;
+    }
+
+    .banner-logo img {
+        height: 45px;
+        width: auto;
+    }
+
+    .banner-inquiry-form {
+        flex: 1;
+    }
+
+    .banner-form-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 15px;
+    }
+
+    .bottom-inquiry-banner .form-group {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .bottom-inquiry-banner .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: #fff;
+        font-size: 0.85em;
+    }
+
+    .bottom-inquiry-banner .form-group input,
+    .bottom-inquiry-banner .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        font-size: 0.9em;
+        font-family: inherit;
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
+        transition: border-color 0.3s ease;
+    }
+
+    .bottom-inquiry-banner .form-group input:focus,
+    .bottom-inquiry-banner .form-group select:focus {
+        outline: none;
+        border-color: #ffc107;
+        background: #fff;
+    }
+
+    .banner-submit-btn {
+        flex-shrink: 0;
+        padding: 10px 30px;
+        background: #ffc107;
+        color: #1d2f4d;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        height: fit-content;
+    }
+
+    .banner-submit-btn:hover {
+        background: #ffd54f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+    }
+}
+
+/* 섹션 이미지 공통 스타일 */
+.section-image {
+    width: 100%;
+}
+
+.section-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.section-image picture {
     display: block;
 }
 
@@ -472,7 +811,7 @@ body {
 
 /* 푸터 */
 .footer {
-    background: #333;
+    background: #000;
     color: #fff;
     padding: 50px 0 30px;
 }
@@ -539,6 +878,194 @@ body {
     color: #3C1E1E;
 }
 
+/* PC 화면에서 메뉴 텍스트 변경 */
+@media (min-width: 769px) {
+    .menu-text-mobile {
+        display: none;
+    }
+    
+    .menu-text-pc {
+        display: inline;
+    }
+}
+
+/* 모바일 하단 버튼 */
+.mobile-bottom-buttons {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-bottom-buttons {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        gap: 0;
+    }
+
+    .mobile-bottom-btn {
+        flex: 1;
+        padding: 18px 10px;
+        border: none;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .kakao-consult-btn {
+        background: #FEE500;
+        color: #3C1E1E;
+    }
+
+    .kakao-consult-btn:active {
+        background: #FDD835;
+    }
+
+    .inquiry-consult-btn {
+        background: #000;
+        color: #fff;
+    }
+
+    .inquiry-consult-btn:active {
+        background: #1a1a1a;
+    }
+}
+
+/* 모바일 문의 모달 */
+.mobile-inquiry-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1002;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.mobile-inquiry-modal.active {
+    display: flex;
+}
+
+.mobile-modal-content {
+    background: #fff;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUpModal 0.3s ease;
+}
+
+@keyframes slideUpModal {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.mobile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.mobile-modal-header h3 {
+    font-size: 1.3em;
+    color: #333;
+    margin: 0;
+}
+
+.mobile-modal-close {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #666;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-inquiry-form {
+    padding: 20px;
+}
+
+.mobile-inquiry-form .form-group {
+    margin-bottom: 20px;
+}
+
+.mobile-inquiry-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 0.95em;
+}
+
+.mobile-inquiry-form .form-group input,
+.mobile-inquiry-form .form-group select,
+.mobile-inquiry-form .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.mobile-inquiry-form .form-group input:focus,
+.mobile-inquiry-form .form-group select:focus,
+.mobile-inquiry-form .form-group textarea:focus {
+    outline: none;
+    border-color: #ffc107;
+}
+
+.mobile-inquiry-form .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.mobile-submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.mobile-submit-btn:active {
+    background: #1a1a1a;
+}
+
 /* 반응형 */
 @media (max-width: 768px) {
     .section h2 {
@@ -555,8 +1082,12 @@ body {
     }
 
     .floating-buttons {
-        bottom: 20px;
+        bottom: 70px;
         right: 20px;
+    }
+
+    body {
+        padding-bottom: 60px; /* 모바일 하단 버튼 높이만큼 공간 확보 */
     }
 
     .floating-btn {

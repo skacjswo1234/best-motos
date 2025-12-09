@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>베스트 모터스 - 중고차 & 장기렌트</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,16 +14,207 @@
             <div class="logo">
                 <img src="best-logo.png" alt="베스트 모터스">
             </div>
+            <button class="menu-toggle" id="menuToggle">
+                <span>☰</span><span class="menu-text-pc">MENU</span>
+            </button>
         </div>
     </header>
 
+    <!-- 사이드바 메뉴 -->
+    <nav class="nav-menu" id="navMenu">
+        <div class="menu-header">
+            <img src="best-logo.png" alt="베스트 모터스">
+            <button class="menu-close" id="menuClose">×</button>
+        </div>
+        <a href="#hero" class="menu-item">홈</a>
+        <a href="#services" class="menu-item">서비스</a>
+        <a href="#reviews" class="menu-item">후기</a>
+        <a href="#contact" class="menu-item">문의하기</a>
+    </nav>
+
+    <!-- 메뉴 오버레이 -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
     <!-- 메인 히어로 이미지 -->
-    <section id="hero" class="hero">
+    <section id="hero" class="hero section-image">
         <picture>
-            <source media="(max-width: 768px)" srcset="images/mob/h-m.png">
-            <img src="images/pc/h-pc.png" alt="베스트 모터스">
+            <source media="(max-width: 768px)" srcset="images/mob/h-1-m.png">
+            <img src="images/pc/h-1.png" alt="베스트 모터스">
+        </picture>
+        <!-- 모바일 히어로 문의하기 버튼 -->
+        <button class="hero-mobile-inquiry-btn" id="heroMobileInquiryBtn">문의하기</button>
+        <!-- 문의 카드 (데스크탑만) -->
+        <div class="hero-inquiry-card">
+            <div class="hero-card-logo">
+                <img src="best-logo.png" alt="베스트 모터스">
+            </div>
+            <form class="inquiry-form" id="heroInquiryForm">
+                <div class="form-group">
+                    <label for="heroName">이름</label>
+                    <input type="text" id="heroName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="heroPhone">연락처</label>
+                    <input type="tel" id="heroPhone" name="phone" placeholder="010-1234-5678" required>
+                </div>
+                <div class="form-group">
+                    <label for="heroService">문의 유형</label>
+                    <select id="heroService" name="service" required>
+                        <option value="">선택하세요</option>
+                        <option value="중고차 구매">중고차 구매</option>
+                        <option value="장기렌트">장기렌트</option>
+                        <option value="차량 판매">차량 판매</option>
+                        <option value="기타 문의">기타 문의</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="heroMessage">문의 내용</label>
+                    <textarea id="heroMessage" name="message" rows="4" placeholder="문의하실 내용을 입력해주세요"></textarea>
+                </div>
+                <button type="submit" class="inquiry-submit-btn">신청하기</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- 섹션 2 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-2-m.png">
+            <img src="images/pc/h-2.png" alt="베스트 모터스">
         </picture>
     </section>
+
+    <!-- 섹션 3 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-3-m.png">
+            <img src="images/pc/h-3.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 4 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-4-m.png">
+            <img src="images/pc/h-4.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 5 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-5-m.png">
+            <img src="images/pc/h-5.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 6 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-6-m.png">
+            <img src="images/pc/h-6.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 7 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-7-m.png">
+            <img src="images/pc/h-7.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 8 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-8-m.png">
+            <img src="images/pc/h-8.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 9 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-9-m.png">
+            <img src="images/pc/h-9.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 10 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-10-m.png">
+            <img src="images/pc/h-10.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 11 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-11-m.png">
+            <img src="images/pc/h-11.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 12 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-12-m.png">
+            <img src="images/pc/h-12.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 13 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-13-m.png">
+            <img src="images/pc/h-13.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 섹션 14 -->
+    <section class="section-image">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-14-m.png">
+            <img src="images/pc/h-14.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 하단 문의 띠지 배너 (데스크탑만) -->
+    <div class="bottom-inquiry-banner">
+        <div class="banner-container">
+            <div class="banner-logo">
+                <img src="best-logo.png" alt="베스트 모터스">
+            </div>
+            <form class="banner-inquiry-form" id="bannerInquiryForm">
+                <div class="banner-form-row">
+                    <div class="form-group">
+                        <label for="bannerName">이름</label>
+                        <input type="text" id="bannerName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerPhone">연락처</label>
+                        <input type="tel" id="bannerPhone" name="phone" placeholder="010-1234-5678" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerService">문의 유형</label>
+                        <select id="bannerService" name="service" required>
+                            <option value="">선택하세요</option>
+                            <option value="중고차 구매">중고차 구매</option>
+                            <option value="장기렌트">장기렌트</option>
+                            <option value="차량 판매">차량 판매</option>
+                            <option value="기타 문의">기타 문의</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bannerMessage">문의 내용</label>
+                        <input type="text" id="bannerMessage" name="message" placeholder="문의하실 내용을 입력해주세요">
+                    </div>
+                    <button type="submit" class="banner-submit-btn">신청하기</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- 푸터 -->
     <footer class="footer">
@@ -39,6 +231,51 @@
             </div>
         </div>
     </footer>
+
+    <!-- 모바일 하단 버튼 -->
+    <div class="mobile-bottom-buttons">
+        <a href="https://pf.kakao.com/_yourkakao" target="_blank" class="mobile-bottom-btn kakao-consult-btn">
+            카카오톡 상담
+        </a>
+        <button class="mobile-bottom-btn inquiry-consult-btn" id="mobileInquiryBtn">
+            1:1 상담신청
+        </button>
+    </div>
+
+    <!-- 모바일 문의 모달 -->
+    <div class="mobile-inquiry-modal" id="mobileInquiryModal">
+        <div class="mobile-modal-content">
+            <div class="mobile-modal-header">
+                <h3>상담 신청</h3>
+                <button class="mobile-modal-close" id="mobileModalClose">×</button>
+            </div>
+            <form class="mobile-inquiry-form" id="mobileInquiryForm">
+                <div class="form-group">
+                    <label for="mobileName">이름</label>
+                    <input type="text" id="mobileName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobilePhone">연락처</label>
+                    <input type="tel" id="mobilePhone" name="phone" placeholder="010-1234-5678" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobileService">문의 유형</label>
+                    <select id="mobileService" name="service" required>
+                        <option value="">선택하세요</option>
+                        <option value="중고차 구매">중고차 구매</option>
+                        <option value="장기렌트">장기렌트</option>
+                        <option value="차량 판매">차량 판매</option>
+                        <option value="기타 문의">기타 문의</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="mobileMessage">문의 내용</label>
+                    <textarea id="mobileMessage" name="message" rows="4" placeholder="문의하실 내용을 입력해주세요"></textarea>
+                </div>
+                <button type="submit" class="mobile-submit-btn">신청하기</button>
+            </form>
+        </div>
+    </div>
 
     <!-- 플로팅 버튼들 -->
     <div class="floating-buttons">
