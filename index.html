@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>베스트 모터스 - 중고차 & 장기렌트</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="best-logo.png" alt="베스트 모터스">
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 히어로 이미지 -->
+    <section id="hero" class="hero">
+        <picture>
+            <source media="(max-width: 768px)" srcset="images/mob/h-m.png">
+            <img src="images/pc/h-pc.png" alt="베스트 모터스">
+        </picture>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="best-logo.png" alt="베스트 모터스">
+                </div>
+                <div class="footer-info">
+                    <p>베스트 모터스</p>
+                    <p>중고차 판매 및 장기렌트 전문</p>
+                    <p>© 2024 베스트 모터스. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 플로팅 버튼들 -->
+    <div class="floating-buttons">
+        <button class="floating-btn top-btn" id="topBtn" title="맨 위로">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 15l-6-6-6 6"/>
+            </svg>
+        </button>
+        <a href="tel:02-1234-5678" class="floating-btn phone-btn" title="전화하기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+        </a>
+        <a href="https://pf.kakao.com/_yourkakao" target="_blank" class="floating-btn kakao-btn" title="카카오톡 상담">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3C6.48 3 2 6.48 2 11c0 1.54.36 2.98.97 4.29L1 23l7.71-1.97c1.31.61 2.75.97 4.29.97 5.52 0 10-3.48 10-8s-4.48-8-10-8z"/>
+            </svg>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

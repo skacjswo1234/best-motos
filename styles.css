@@ -1,0 +1,590 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 헤더 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #333;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle span {
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.menu-toggle:hover {
+    color: #ffc107;
+}
+
+/* 메뉴 (PC/모바일 공통) */
+.nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 350px;
+    height: 100vh;
+    background: #333;
+    box-shadow: -2px 0 15px rgba(0,0,0,0.3);
+    z-index: 1001;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+}
+
+.nav-menu.active {
+    right: 0;
+}
+
+.menu-header {
+    padding: 25px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #555;
+    background: #2a2a2a;
+}
+
+.menu-header img {
+    height: 45px;
+}
+
+.menu-close {
+    background: none;
+    border: none;
+    font-size: 35px;
+    cursor: pointer;
+    color: #fff;
+    line-height: 1;
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.menu-close:hover {
+    color: #ffc107;
+}
+
+.menu-item {
+    display: block;
+    padding: 20px 25px;
+    text-decoration: none;
+    color: #fff;
+    border-bottom: 1px solid #444;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.menu-item:hover {
+    background: #444;
+    padding-left: 30px;
+    color: #ffc107;
+}
+
+/* 히어로 섹션 */
+.hero {
+    margin-top: 80px;
+    width: 100%;
+}
+
+.hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 섹션 공통 스타일 */
+.section {
+    padding: 80px 0;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+/* 소개 섹션 */
+.intro-section {
+    background: #f8f9fa;
+}
+
+.intro-section p {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 서비스 섹션 */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.service-card {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.service-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.service-card p {
+    color: #666;
+}
+
+/* 실시간 상담신청 */
+.consultation-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.consultation-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="30" cy="30" r="2"/></g></svg>');
+    opacity: 0.3;
+}
+
+.consultation-section h2 {
+    color: #fff;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+    font-size: 2.5em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.consultation-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.consultation-item {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    padding: 25px 35px;
+    border-radius: 15px;
+    font-size: 0.95em;
+    white-space: normal;
+    opacity: 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 350px;
+    max-width: 450px;
+    width: auto;
+    z-index: 10;
+    animation: slideUp 6s ease-in-out forwards;
+}
+
+.consultation-item::before {
+    content: '💬';
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+.consultation-item:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateX(-50%) scale(1.02);
+}
+
+.consultation-name {
+    font-weight: 600;
+    font-size: 1.15em;
+    color: #fff;
+}
+
+.consultation-phone {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1em;
+}
+
+.consultation-service {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95em;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 5px;
+    width: fit-content;
+}
+
+.consultation-inquiry {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.95em;
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+@keyframes slideUp {
+    0% {
+        bottom: -100px;
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    100% {
+        bottom: 450px;
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+/* 후기 섹션 */
+.reviews-section {
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    padding: 80px 0;
+    position: relative;
+}
+
+.reviews-section h2 {
+    margin-bottom: 60px;
+}
+
+.reviews-container {
+    overflow: hidden;
+    position: relative;
+    padding: 40px 0;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.reviews-track {
+    display: flex;
+    gap: 30px;
+    animation: scrollReviews 100s linear infinite;
+    width: fit-content;
+    will-change: transform;
+}
+
+.review-item {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    font-size: 1em;
+    color: #333;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 320px;
+    max-width: 320px;
+    border: 1px solid #f0f0f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+}
+
+.review-name {
+    font-weight: 600;
+    color: #007bff;
+    font-size: 1em;
+}
+
+.review-stars {
+    color: #ffc107;
+    font-size: 1.2em;
+    letter-spacing: 3px;
+}
+
+.review-text {
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+.review-date {
+    font-size: 0.85em;
+    color: #999;
+    margin-top: 5px;
+}
+
+.review-car {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+@keyframes scrollReviews {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* 문의폼 */
+.contact-section {
+    background: #fff;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+/* 푸터 */
+.footer {
+    background: #333;
+    color: #fff;
+    padding: 50px 0 30px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-logo img {
+    height: 60px;
+}
+
+.footer-info p {
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+/* 플로팅 버튼들 */
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+.floating-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.top-btn {
+    background: #333;
+}
+
+.phone-btn {
+    background: #28a745;
+}
+
+.kakao-btn {
+    background: #FEE500;
+    color: #3C1E1E;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .section h2 {
+        font-size: 2em;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .floating-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    .consultation-item {
+        font-size: 0.9em;
+        padding: 20px 25px;
+        min-width: 280px;
+        max-width: 90%;
+    }
+
+    .review-item {
+        min-width: 280px;
+        max-width: 280px;
+        padding: 25px 30px;
+    }
+    
+    .reviews-container {
+        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+    
+    .nav-menu {
+        width: 85%;
+        max-width: 320px;
+    }
+}
+
