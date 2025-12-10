@@ -64,7 +64,7 @@ export async function onRequestPost(context: { request: Request; env: Env }) {
       );
     }
 
-    // 비밀번호 확인 (실제 환경에서는 해시 비교 필요)
+    // 비밀번호 확인 (평문 비교)
     if ((admin as any).password !== password) {
       return new Response(
         JSON.stringify({ success: false, error: '비밀번호가 일치하지 않습니다.' }),

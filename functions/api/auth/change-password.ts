@@ -84,7 +84,7 @@ export async function onRequestPost(context: { request: Request; env: Env }) {
       );
     }
 
-    // 현재 비밀번호 확인
+    // 현재 비밀번호 확인 (평문 비교)
     if ((admin as any).password !== currentPassword) {
       return new Response(
         JSON.stringify({ success: false, error: '현재 비밀번호가 일치하지 않습니다.' }),
@@ -98,7 +98,7 @@ export async function onRequestPost(context: { request: Request; env: Env }) {
       );
     }
 
-    // 새 비밀번호로 업데이트
+    // 새 비밀번호로 업데이트 (평문 저장)
     await db
       .prepare('UPDATE admin SET password = ?, updated_at = CURRENT_TIMESTAMP WHERE id = 1')
       .bind(newPassword)

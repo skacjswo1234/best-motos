@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS admin (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- 초기 관리자 비밀번호 설정 (비밀번호: admin123)
--- 실제 사용 시에는 해시된 비밀번호로 변경해야 합니다
+-- 초기 관리자 비밀번호 설정 (비밀번호: 1234)
 INSERT OR IGNORE INTO admin (id, password) VALUES (1, '1234');
 
