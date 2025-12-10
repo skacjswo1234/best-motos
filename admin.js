@@ -552,11 +552,23 @@ if (passwordChangeForm) {
 // 로그아웃
 const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         if (confirm('로그아웃 하시겠습니까?')) {
-            // 쿠키 삭제 (만료 시간을 과거로 설정)
+            try {
+                // 서버 측에서 쿠키 삭제
+                await fetch(`${AUTH_API_BASE}/logout`, {
+                    method: 'POST',
+                    credentials: 'include',
+                });
+            } catch (error) {
+                console.error('로그아웃 API 호출 실패:', error);
+            }
+            
+            // 클라이언트 측 쿠키도 삭제 시도 (HttpOnly가 아닌 경우를 위해)
             document.cookie = 'admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            
+            // 로그인 페이지로 리다이렉트
             window.location.href = '/admin-login.html';
         }
     });
