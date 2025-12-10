@@ -1,0 +1,8 @@
+name = "best-motos"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "best-motos-db"
+database_name = "best-motos-db"
+database_id = "16c48beb-96d5-4688-8d13-5d9f37afcefd"
+

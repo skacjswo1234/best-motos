@@ -88,24 +88,97 @@ if (topBtn) {
     });
 }
 
+// API 기본 URL
+const API_BASE = '/api/inquiries';
+
+// 신청 완료 모달 제어
+const successModalOverlay = document.getElementById('successModalOverlay');
+const successModalClose = document.getElementById('successModalClose');
+
+function showSuccessModal() {
+    if (successModalOverlay) {
+        successModalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function hideSuccessModal() {
+    if (successModalOverlay) {
+        successModalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+if (successModalClose) {
+    successModalClose.addEventListener('click', hideSuccessModal);
+}
+
+if (successModalOverlay) {
+    successModalOverlay.addEventListener('click', (e) => {
+        if (e.target === successModalOverlay) {
+            hideSuccessModal();
+        }
+    });
+}
+
+// 문의 폼 제출 공통 함수
+async function submitInquiry(form, formElement) {
+    const submitBtn = formElement.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '';
+    
+    // 버튼 비활성화 및 로딩 상태
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '처리 중...';
+    }
+    
+    try {
+        const response = await fetch(API_BASE, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(form),
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            // 폼 초기화
+            formElement.reset();
+            // 성공 모달 표시
+            showSuccessModal();
+        } else {
+            alert('신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+        }
+    } catch (error) {
+        console.error('문의 제출 실패:', error);
+        alert('신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+    } finally {
+        // 버튼 활성화 및 원래 텍스트 복원
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    }
+}
+
 // 히어로 문의 폼 제출
 const heroInquiryForm = document.getElementById('heroInquiryForm');
 
 if (heroInquiryForm) {
-    heroInquiryForm.addEventListener('submit', (e) => {
+    heroInquiryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(heroInquiryForm);
-        const data = Object.fromEntries(formData);
+        const data = {
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            service: formData.get('service'),
+            message: formData.get('message') || '',
+        };
         
-        // 여기에 실제 폼 제출 로직을 추가하세요 (API 호출 등)
-        console.log('문의 폼 제출:', data);
-        
-        // 간단한 알림 (실제 구현 시에는 서버로 전송)
-        alert('상담 신청이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
-        
-        // 폼 초기화
-        heroInquiryForm.reset();
+        await submitInquiry(data, heroInquiryForm);
     });
 }
 
@@ -113,20 +186,18 @@ if (heroInquiryForm) {
 const bannerInquiryForm = document.getElementById('bannerInquiryForm');
 
 if (bannerInquiryForm) {
-    bannerInquiryForm.addEventListener('submit', (e) => {
+    bannerInquiryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(bannerInquiryForm);
-        const data = Object.fromEntries(formData);
+        const data = {
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            service: formData.get('service'),
+            message: formData.get('message') || '',
+        };
         
-        // 여기에 실제 폼 제출 로직을 추가하세요 (API 호출 등)
-        console.log('하단 배너 문의 폼 제출:', data);
-        
-        // 간단한 알림 (실제 구현 시에는 서버로 전송)
-        alert('상담 신청이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
-        
-        // 폼 초기화
-        bannerInquiryForm.reset();
+        await submitInquiry(data, bannerInquiryForm);
     });
 }
 
@@ -173,20 +244,19 @@ if (mobileInquiryModal) {
 
 // 모바일 문의 폼 제출
 if (mobileInquiryForm) {
-    mobileInquiryForm.addEventListener('submit', (e) => {
+    mobileInquiryForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const formData = new FormData(mobileInquiryForm);
-        const data = Object.fromEntries(formData);
+        const data = {
+            name: formData.get('name'),
+            phone: formData.get('phone'),
+            service: formData.get('service'),
+            message: formData.get('message') || '',
+        };
         
-        // 여기에 실제 폼 제출 로직을 추가하세요 (API 호출 등)
-        console.log('모바일 문의 폼 제출:', data);
-        
-        // 간단한 알림 (실제 구현 시에는 서버로 전송)
-        alert('상담 신청이 완료되었습니다.\n빠른 시일 내에 연락드리겠습니다.');
-        
-        // 폼 초기화 및 모달 닫기
-        mobileInquiryForm.reset();
+        await submitInquiry(data, mobileInquiryForm);
+        // 모바일 모달 닫기
         closeMobileModal();
     });
 }
