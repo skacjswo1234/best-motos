@@ -10,7 +10,24 @@ function checkAuth(request: Request): boolean {
 
 export async function onRequest(context: { request: Request; env: Env; params: { id: string } }) {
   const { request, env, params } = context;
-  const db = env['best-motos-db'];
+  const db = env['best-motos-db'] || (env as any)['best-motos-db'];
+  
+  if (!db) {
+    console.error('D1 database binding not found. Available env keys:', Object.keys(env));
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '데이터베이스 연결에 실패했습니다.',
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+  }
   
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',

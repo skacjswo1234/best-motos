@@ -10,7 +10,6 @@ function checkAuth(request: Request): boolean {
 
 export async function onRequest(context: { request: Request; env: Env }) {
   const { request, env } = context;
-  const db = env['best-motos-db'];
   
   // CORS 헤더 설정
   const corsHeaders = {
@@ -22,6 +21,26 @@ export async function onRequest(context: { request: Request; env: Env }) {
   // OPTIONS 요청 처리
   if (request.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
+  }
+
+  // D1 데이터베이스 바인딩 확인
+  const db = env['best-motos-db'] || (env as any)['best-motos-db'];
+  
+  if (!db) {
+    console.error('D1 database binding not found. Available env keys:', Object.keys(env));
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: '데이터베이스 연결에 실패했습니다.',
+      }),
+      {
+        status: 500,
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   }
 
   // 사용자 문의 제출은 인증 불필요 (GET, POST는 모두 인증 불필요)
