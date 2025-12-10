@@ -516,13 +516,19 @@ if (passwordChangeForm) {
                 credentials: 'include',
             });
             
-            // 401 에러 시 로그인 페이지로 리다이렉트
+            const result = await response.json();
+            
+            // 401 에러 처리 (현재 비밀번호 불일치 또는 인증 만료)
             if (response.status === 401) {
-                window.location.href = '/admin-login.html';
+                // 인증 만료인 경우 (success가 false이고 error가 '인증이 필요합니다'인 경우)
+                if (result.error && result.error.includes('인증이 필요')) {
+                    window.location.href = '/admin-login.html';
+                    return;
+                }
+                // 현재 비밀번호 불일치인 경우 에러 메시지 표시
+                showPasswordError(result.error || '현재 비밀번호가 일치하지 않습니다.');
                 return;
             }
-            
-            const result = await response.json();
             
             if (result.success) {
                 showPasswordSuccess('비밀번호가 성공적으로 변경되었습니다.');
