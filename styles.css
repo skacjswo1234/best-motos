@@ -50,8 +50,14 @@ body {
 }
 
 .logo img {
-    height: 50px;
+    height: 90px;
     width: auto;
+}
+
+@media (max-width: 768px) {
+    .logo img {
+        height: 60px;
+    }
 }
 
 .menu-toggle {
@@ -110,7 +116,7 @@ body {
 }
 
 .menu-header img {
-    height: 45px;
+    height: 90px;
 }
 
 .menu-close {
@@ -299,7 +305,7 @@ body {
     }
 
     .hero-card-logo img {
-        height: 35px;
+        height: 70px;
         width: auto;
     }
 
@@ -401,7 +407,7 @@ body {
     }
 
     .banner-logo img {
-        height: 45px;
+        height: 80px;
         width: auto;
     }
 
@@ -825,7 +831,7 @@ body {
 }
 
 .footer-logo img {
-    height: 60px;
+    height: 100px;
 }
 
 .footer-info p {
