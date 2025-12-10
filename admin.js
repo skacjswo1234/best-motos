@@ -2,7 +2,6 @@
 const API_BASE = '/api/inquiries';
 const AUTH_API_BASE = '/api/auth';
 const PASSWORD_API_BASE = '/api/auth/change-password';
-const PASSWORD_API_BASE = '/api/auth/change-password';
 
 // 현재 선택된 문의 ID
 let currentInquiryId = null;
@@ -259,6 +258,12 @@ if (updateStatusBtn) {
     updateStatusBtn.addEventListener('click', async () => {
         if (!currentInquiryId) return;
         
+        // 인증 확인
+        const isAuthenticated = await checkAuth();
+        if (!isAuthenticated) {
+            return;
+        }
+        
         const newStatus = statusSelect.value;
         
         try {
@@ -268,7 +273,14 @@ if (updateStatusBtn) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ status: newStatus }),
+                credentials: 'include',
             });
+            
+            // 401 에러 시 로그인 페이지로 리다이렉트
+            if (response.status === 401) {
+                window.location.href = '/admin-login.html';
+                return;
+            }
             
             const result = await response.json();
             
@@ -291,12 +303,25 @@ if (deleteBtn) {
     deleteBtn.addEventListener('click', async () => {
         if (!currentInquiryId) return;
         
+        // 인증 확인
+        const isAuthenticated = await checkAuth();
+        if (!isAuthenticated) {
+            return;
+        }
+        
         if (!confirm('정말 삭제하시겠습니까?')) return;
         
         try {
             const response = await fetch(`${API_BASE}/${currentInquiryId}`, {
                 method: 'DELETE',
+                credentials: 'include',
             });
+            
+            // 401 에러 시 로그인 페이지로 리다이렉트
+            if (response.status === 401) {
+                window.location.href = '/admin-login.html';
+                return;
+            }
             
             const result = await response.json();
             
@@ -316,13 +341,25 @@ if (deleteBtn) {
 
 // 통계 로드
 async function loadStats() {
+    // 인증 확인
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        return;
+    }
+    
     try {
         const [totalRes, pendingRes, contactedRes, completedRes] = await Promise.all([
-            fetch(API_BASE),
-            fetch(`${API_BASE}?status=pending`),
-            fetch(`${API_BASE}?status=contacted`),
-            fetch(`${API_BASE}?status=completed`),
+            fetch(API_BASE, { credentials: 'include' }),
+            fetch(`${API_BASE}?status=pending`, { credentials: 'include' }),
+            fetch(`${API_BASE}?status=contacted`, { credentials: 'include' }),
+            fetch(`${API_BASE}?status=completed`, { credentials: 'include' }),
         ]);
+        
+        // 401 에러 체크
+        if (totalRes.status === 401 || pendingRes.status === 401 || contactedRes.status === 401 || completedRes.status === 401) {
+            window.location.href = '/admin-login.html';
+            return;
+        }
         
         const totalData = await totalRes.json();
         const pendingData = await pendingRes.json();
@@ -458,6 +495,12 @@ if (passwordChangeForm) {
                 credentials: 'include',
             });
             
+            // 401 에러 시 로그인 페이지로 리다이렉트
+            if (response.status === 401) {
+                window.location.href = '/admin-login.html';
+                return;
+            }
+            
             const result = await response.json();
             
             if (result.success) {
@@ -492,19 +535,31 @@ if (logoutBtn) {
     });
 }
 
+// 페이지 로드 시 즉시 인증 체크 (DOMContentLoaded 전에 실행)
+(async () => {
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        // 인증되지 않았으면 여기서 중단 (리다이렉트됨)
+        return;
+    }
+})();
+
 // 초기 로드
 document.addEventListener('DOMContentLoaded', async () => {
     // 로그인 확인 후 데이터 로드
     const isAuthenticated = await checkAuth();
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
+        // 인증되지 않았으면 리다이렉트됨
+        return;
+    }
+    
+    loadInquiries();
+    loadStats();
+    
+    // 30초마다 자동 새로고침
+    setInterval(() => {
         loadInquiries();
         loadStats();
-        
-        // 30초마다 자동 새로고침
-        setInterval(() => {
-            loadInquiries();
-            loadStats();
-        }, 30000);
-    }
+    }, 30000);
 });
 

@@ -77,8 +77,29 @@ if (passwordInput) {
     });
 }
 
-// 페이지 로드 시 비밀번호 입력 필드에 포커스
+// 이미 로그인된 경우 관리자 페이지로 리다이렉트
+async function checkIfAlreadyLoggedIn() {
+    try {
+        const response = await fetch('/api/auth/check', {
+            credentials: 'include',
+        });
+        const result = await response.json();
+        
+        if (result.authenticated) {
+            // 이미 로그인되어 있으면 관리자 페이지로 리다이렉트
+            window.location.href = '/admin.html';
+        }
+    } catch (error) {
+        // 에러가 발생해도 로그인 페이지에 머무름
+        console.error('인증 확인 실패:', error);
+    }
+}
+
+// 페이지 로드 시 비밀번호 입력 필드에 포커스 및 로그인 상태 확인
 window.addEventListener('DOMContentLoaded', () => {
+    // 이미 로그인된 경우 체크
+    checkIfAlreadyLoggedIn();
+    
     if (passwordInput) {
         passwordInput.focus();
     }
