@@ -24,19 +24,8 @@ export async function onRequest(context: { request: Request; env: Env }) {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // 인증 확인 (POST 요청만)
-  if (request.method === 'POST' && !checkAuth(request)) {
-    return new Response(
-      JSON.stringify({ success: false, error: '인증이 필요합니다.' }),
-      {
-        status: 401,
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-  }
+  // 사용자 문의 제출은 인증 불필요 (GET, POST는 모두 인증 불필요)
+  // PUT, DELETE는 [id].ts에서 인증 체크
 
   try {
 

@@ -126,6 +126,12 @@ async function submitInquiry(form, formElement) {
     const submitBtn = formElement.querySelector('button[type="submit"]');
     const originalText = submitBtn ? submitBtn.textContent : '';
     
+    // 필수 필드 확인
+    if (!form.name || !form.phone || !form.service) {
+        alert('필수 항목을 모두 입력해주세요.');
+        return;
+    }
+    
     // 버튼 비활성화 및 로딩 상태
     if (submitBtn) {
         submitBtn.disabled = true;
@@ -141,6 +147,12 @@ async function submitInquiry(form, formElement) {
             body: JSON.stringify(form),
         });
         
+        // 응답 상태 확인
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `서버 오류 (${response.status})`);
+        }
+        
         const result = await response.json();
         
         if (result.success) {
@@ -149,11 +161,12 @@ async function submitInquiry(form, formElement) {
             // 성공 모달 표시
             showSuccessModal();
         } else {
-            alert('신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+            alert(result.error || '신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
         }
     } catch (error) {
         console.error('문의 제출 실패:', error);
-        alert('신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+        const errorMessage = error.message || '신청 중 오류가 발생했습니다.\n다시 시도해주세요.';
+        alert(errorMessage);
     } finally {
         // 버튼 활성화 및 원래 텍스트 복원
         if (submitBtn) {
@@ -255,9 +268,60 @@ if (mobileInquiryForm) {
             message: formData.get('message') || '',
         };
         
-        await submitInquiry(data, mobileInquiryForm);
-        // 모바일 모달 닫기
-        closeMobileModal();
+        // 성공 여부를 확인하기 위해 submitInquiry를 수정
+        const submitBtn = mobileInquiryForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn ? submitBtn.textContent : '';
+        
+        // 필수 필드 확인
+        if (!data.name || !data.phone || !data.service) {
+            alert('필수 항목을 모두 입력해주세요.');
+            return;
+        }
+        
+        // 버튼 비활성화 및 로딩 상태
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = '처리 중...';
+        }
+        
+        try {
+            const response = await fetch(API_BASE, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            // 응답 상태 확인
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `서버 오류 (${response.status})`);
+            }
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // 폼 초기화
+                mobileInquiryForm.reset();
+                // 모바일 모달 닫기
+                closeMobileModal();
+                // 성공 모달 표시
+                showSuccessModal();
+            } else {
+                alert(result.error || '신청 중 오류가 발생했습니다.\n다시 시도해주세요.');
+            }
+        } catch (error) {
+            console.error('문의 제출 실패:', error);
+            const errorMessage = error.message || '신청 중 오류가 발생했습니다.\n다시 시도해주세요.';
+            alert(errorMessage);
+        } finally {
+            // 버튼 활성화 및 원래 텍스트 복원
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        }
     });
 }
 
