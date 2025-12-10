@@ -135,6 +135,12 @@ function getStatusText(status) {
 
 // 문의 리스트 로드
 async function loadInquiries() {
+    // 인증 확인
+    const isAuthenticated = await checkAuth();
+    if (!isAuthenticated) {
+        return;
+    }
+    
     loading.style.display = 'block';
     emptyState.style.display = 'none';
     inquiriesList.innerHTML = '';
@@ -143,7 +149,16 @@ async function loadInquiries() {
         const status = statusFilter.value;
         const url = status ? `${API_BASE}?status=${status}` : API_BASE;
         
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            credentials: 'include',
+        });
+        
+        // 401 에러 시 로그인 페이지로 리다이렉트
+        if (response.status === 401) {
+            window.location.href = '/admin-login.html';
+            return;
+        }
+        
         const result = await response.json();
         
         if (result.success && result.data.length > 0) {
@@ -448,6 +463,12 @@ function showPasswordSuccess(message) {
 if (passwordChangeForm) {
     passwordChangeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // 인증 확인
+        const isAuthenticated = await checkAuth();
+        if (!isAuthenticated) {
+            return;
+        }
         
         const currentPassword = currentPasswordInput.value.trim();
         const newPassword = newPasswordInput.value.trim();
